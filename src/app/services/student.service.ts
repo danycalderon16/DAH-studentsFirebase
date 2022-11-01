@@ -44,4 +44,7 @@ export class StudentService {
     return this.students;
   }
 
+  public removeTask(pos:number){
+    return this.students.splice(pos,1);
+  }  
 }
