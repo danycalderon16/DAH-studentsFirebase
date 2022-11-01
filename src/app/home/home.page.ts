@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Student } from "../models/student";
+import { StudentService } from "../services/student.service";
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,10 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  public students: Student[];
+
+  constructor(private studentService:StudentService) {
+    this.students = studentService.getStudents();
+  }
 
 }
