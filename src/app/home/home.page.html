@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Estudiantes
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,7 +11,8 @@
       <ion-col>
         <ion-list>
           <ion-item-sliding *ngFor="let student of students; let i = index;">
-            <ion-item>
+            <!-- <ion-item [routerLink]="['/profile']"> -->
+            <ion-item  (click)="goToProfile(student)">
               <ion-label>
                 {{student.name}}
             </ion-label>

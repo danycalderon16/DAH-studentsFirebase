@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Student } from "../models/student";
 import { AlertController, ToastController } from '@ionic/angular';
 import { StudentService } from "../services/student.service";
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,8 @@ export class HomePage {
 
   public students: Student[];
 
-  constructor(private studentService:StudentService,private toastController: ToastController,private alertController: AlertController) {
+  constructor(private studentService:StudentService,private toastController: ToastController,private alertController: AlertController,
+    private router:Router) {
     this.students = studentService.getStudents();
   }
 
@@ -65,6 +67,13 @@ export class HomePage {
     await toast.present();
   }
   
-
+  public goToProfile(student:Student){
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(student)
+      }
+    };
+    this.router.navigate(['profile'], navigationExtras);
+  }
   
 }

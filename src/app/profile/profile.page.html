@@ -1,0 +1,32 @@
+<ion-header translucent no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="dark">
+        <ion-back-button></ion-back-button>
+        Perfil de estudiante
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" slot="fixed" >
+    <div class="card">
+      <div class="header">
+        <div class="avatar">
+          <img [src]="student.photo" alt="">
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="user-meta ion-text-center">
+          <h3 class="playername">{{student.name}}</h3>
+          <h5 class="second-text ">{{student.controlNumber}}</h5>
+          <h5 class="second-text ">{{student.curp}}</h5>
+          <h5 class="second-text ">Edad: {{student.age}}</h5>
+          <h5 class="second-text ">{{student.email}}</h5>
+          <h5 class="second-text ">{{student.career}}</h5>
+          
+        </div>
+
+      </div>
+    </div>
+</ion-content>
