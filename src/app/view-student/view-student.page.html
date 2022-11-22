@@ -1,0 +1,39 @@
+<ion-header translucent no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="dark">
+        <ion-back-button></ion-back-button>
+        Perfil de estudiante
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" slot="fixed" >
+    <div class="card">
+      <div class="header">
+        <div class="avatar">
+          <img [src]="student.photo" alt="">
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="user-meta ion-text-center">
+          <h1 class="playername">{{student.name}}</h1>
+          <ion-label class="second-text ">{{student.controlNumber}}
+            <ion-chip color="primary">
+              <ion-label >{{student.career}}</ion-label>
+            </ion-chip>
+          </ion-label>
+          <ion-label class="second-text ">Curp {{student.curp}}</ion-label>
+          <ion-label class="second-text ">Edad: {{student.age}}</ion-label>
+          <ion-label class="second-text ">{{student.email}}</ion-label>
+          <!-- <ion-chip color="primary" class="ion-float-left"> -->        
+        </div>
+      </div>
+    </div>    
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button  (click)="editStudent()">
+        <ion-icon name="pencil-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+</ion-content>

@@ -20,9 +20,9 @@ export class StudentService {
         career:' ISC',
       },
       {
-        controlNumber: '184010980',
+        controlNumber: '18401080',
         name: 'Antonio de Jesus Alvarado Martinez',
-        curp: 'ALMA991218HNTRLN05',
+        curp: 'ALMA991217HNTRLN05',
         age: 22,
         nip: 1234,        
         email: 'andealvaradoma@ittepic.edu.mx',
@@ -45,7 +45,30 @@ export class StudentService {
     return this.students;
   }
 
-  public removeTask(pos:number){
+  public getStudentByControlNumber(cn:string):Student{
+    let item: Student;
+    item =  this.students.find((student) => {
+      return student.controlNumber === cn
+    });
+    
+    return item;
+  }
+
+  public removeStudent(pos:number){
     return this.students.splice(pos,1);
   }  
+
+  public newStudent(student:Student):void{
+    this.students.push(student);
+  }
+
+  public editStudent(student:Student):void{
+    this.students.map(std =>{
+      if(std.controlNumber===student.controlNumber){
+        console.log("igual");        
+       return Object.assign(std,student)
+      }
+      return std;
+    });    
+  }
 }

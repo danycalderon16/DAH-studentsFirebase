@@ -13,12 +13,14 @@ export class HomePage {
 
   public students: Student[];
 
-  constructor(private studentService:StudentService,private toastController: ToastController,private alertController: AlertController,
+  constructor(private studentService:StudentService,
+    private toastController: ToastController,
+    private alertController: AlertController,
     private router:Router) {
     this.students = studentService.getStudents();
   }
 
-  async removeTask(pos:number) {
+  public async removeStudent(pos:number) {
     const alert = await this.alertController.create({
       header: '¿Está seguro de borrar este alumno?',
       buttons: [
@@ -33,7 +35,7 @@ export class HomePage {
           text: 'Sí',
           role: 'confirm',
           handler: () => {
-            const taskRemoved = this.studentService.removeTask(pos);
+            const taskRemoved = this.studentService.removeStudent(pos);
             this.students = this.studentService.getStudents()
             this.presentToast('bottom','Se elimino el alumno corretamente',()=>{
               this.students.splice(pos,0,taskRemoved[0]);
@@ -48,7 +50,7 @@ export class HomePage {
     await alert.present();
   }
 
-  async presentToast(position: 'top' | 'middle' | 'bottom', message:string,callback) {
+  public async presentToast(position: 'top' | 'middle' | 'bottom', message:string,callback) {
     const toast = await this.toastController.create({
       message,
       duration: 1500,
@@ -74,6 +76,18 @@ export class HomePage {
       }
     };
     this.router.navigate(['profile'], navigationExtras);
+  }
+
+  public getStudentByControlNumber(cn:string):void{
+    this.router.navigate(['/view-student'],
+    {
+      queryParams:{controlNumber:cn}
+    }
+    );
+  }
+
+  public newStudent():void{
+    this.router.navigate(['/new-student']);
   }
   
 }
