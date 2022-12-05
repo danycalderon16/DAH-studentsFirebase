@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginPage implements OnInit {
     private userService:UserService,
     private fb: FormBuilder,
     private toast: ToastController,
-    private router: Router) { }
+    private router: Router,
+    private auth:AuthService) { }
 
   ngOnInit() {
     this.myForm = this.fb.group(
@@ -77,6 +79,10 @@ export class LoginPage implements OnInit {
     }else{
       this.presentToast('bottom','Número de control o NIP incorrecto');
     }
+  }
+
+  public onLogin(){
+    this.auth.googleAuth();
   }
 
   public async presentToast(position: 'top' | 'middle' | 'bottom', message:string) {

@@ -11,42 +11,48 @@
     <form [formGroup]="myForm">
       <ion-row class="ion-justify-content-center">
         <ion-col size-sm="12" size-md="6" size-lg="3">
-            <ion-item lines="full">
-              <ion-label position="floating" >Número de control</ion-label>
-              <ion-input type="text" formControlName="controlNumber"></ion-input>
-            </ion-item>
-            <div>
-              <ng-container *ngFor="let item of validationMessages['controlnumber']">
-                <div class="errormessage" *ngIf="(myForm.get('controlNumber').dirty || 
+          <ion-item lines="full">
+            <ion-label position="floating">Número de control</ion-label>
+            <ion-input type="text" formControlName="controlNumber"></ion-input>
+          </ion-item>
+          <div>
+            <ng-container *ngFor="let item of validationMessages['controlnumber']">
+              <div class="errormessage" *ngIf="(myForm.get('controlNumber').dirty || 
                 myForm.get('controlNumber').touched) && myForm.get('controlNumber').hasError(item.type) ">
                 {{item.message}}
-                </div>
-              </ng-container>
-            </div>
-            <ion-item lines="full">
-              <ion-label position="floating" >NIP</ion-label>
-              <ion-input type="password" formControlName="nip"></ion-input>
-            </ion-item>
-            <div>
-              <ng-container *ngFor="let item of validationMessages['nip']">
-                <div class="errormessage" *ngIf="(myForm.get('nip').dirty || 
+              </div>
+            </ng-container>
+          </div>
+          <ion-item lines="full">
+            <ion-label position="floating">NIP</ion-label>
+            <ion-input type="password" formControlName="nip"></ion-input>
+          </ion-item>
+          <div>
+            <ng-container *ngFor="let item of validationMessages['nip']">
+              <div class="errormessage" *ngIf="(myForm.get('nip').dirty || 
                 myForm.get('nip').touched) && myForm.get('nip').hasError(item.type) ">
                 {{item.message}}
-                </div>
-              </ng-container>
-            </div>
-            <ion-row>
-              <ion-col>
-                <ion-button  (click)="login(myForm.value)" type="submit" color="danger" expand="block" *ngIf="myForm.valid">Sign In</ion-button>
-              </ion-col>
-            </ion-row>
-            <!-- <ion-row>
-              <ion-col class="ion-text-center">
-                <a class="small-text ion-text-center" expand="block">Forgot Password?</a>
-              </ion-col>
-            </ion-row> -->
+              </div>
+            </ng-container>
+          </div>
+          <ion-row>
+            <ion-col>
+              <ion-button (click)="login(myForm.value)" type="submit" color="danger" expand="block"
+                *ngIf="myForm.valid">Sign In</ion-button>
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
     </form>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-sm="12" size-md="6" size-lg="3">
+        <ion-button class="btn-login" expand="block" (click)="onLogin()">
+          <ion-icon class="ion-padding-end" name="logo-google"></ion-icon>
+          <ion-text>
+            <p>Ingresa con Google</p>
+          </ion-text>
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>
