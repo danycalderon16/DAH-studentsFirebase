@@ -1,5 +1,5 @@
 export class Student {
-    controlNumber: string;
+    controlnumber: string;
     name: string;
     curp: string;
     age: number;
@@ -7,4 +7,5 @@ export class Student {
     email: string;
     career: string;
     photo?: string;
+    id?:string;
 }

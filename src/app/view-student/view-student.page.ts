@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Student } from "../models/student";
 import { StudentService } from "../services/student.service";
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-student',
@@ -10,31 +10,37 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 })
 export class ViewStudentPage implements OnInit {
 
-  public student:Student;
+  public student: Student;
+  public id: string;
 
-  constructor(private studentService:StudentService, 
-    private aroute:ActivatedRoute,
-    private router:Router) { }
+  constructor(private studentService: StudentService,
+    private aroute: ActivatedRoute,
+    private router: Router) {
+    this.student = {
+      name: '',
+      controlnumber: '',
+      email: '',
+      age: 0,
+      photo: '',
+      curp: '',
+      career: '',
+      nip: 0
+    }
+  }
 
   ngOnInit() {
-    this.aroute.queryParams.subscribe((params)=>{
-      this.student = this.studentService.getStudentByControlNumber(params.controlNumber)
-      if(this.student.photo == null){
-        this.student.photo = 'https://i.stack.imgur.com/l60Hf.png';
-      }
+    this.aroute.queryParams.subscribe((params) => {
+      this.id = params.id;
+      this.studentService.getStudentById(this.id).subscribe(item => {
+        this.student = item as Student;
+        this.student = { id: this.id, ...this.student }
+      })
     });
   }
 
-  public editStudent():void{
-    this.router.navigate(['/view-edit-student'],
-    {
-      queryParams:{controlNumber: this.student.controlNumber}
-    }
-    );    
+  public editStudent() {
+    this.router.navigate(['view-edit-student'], {
+      queryParams: { ...this.student }
+    });
   }
-
-  public getStudentByControlNumber(cn:string):void{
-   
-  }
-
 }

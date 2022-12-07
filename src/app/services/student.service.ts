@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Student } from "../models/student";
+import { map } from "rxjs/operators";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,67 +11,50 @@ export class StudentService {
 
   private students: Student[];
  
-  constructor() { 
-    this.students = [
-      {
-        controlNumber: '18401090',
-        name: 'Daniel Calderon',
-        curp: 'CAVD991116HNTRLN04',
-        age: 22,
-        nip: 1234,        
-        email: 'daalcalderonvi@ittepic.edu.mx',
-        career:' ISC',
-      },
-      {
-        controlNumber: '18401080',
-        name: 'Antonio de Jesus Alvarado Martinez',
-        curp: 'ALMA991217HNTRLN05',
-        age: 22,
-        nip: 1234,        
-        email: 'andealvaradoma@ittepic.edu.mx',
-        career:' ISC',
-        photo:'https://scontent.fgdl9-1.fna.fbcdn.net/v/t1.6435-9/157886462_3724390637651464_4859605508018058612_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=174925&_nc_eui2=AeHk5LDtApfO0HY2gff__KJ28NULseaNrjXw1Qux5o2uNYYuy3_na5gcEQsjZU3ZfIN3KkjeZST6lnHJwx7q66m2&_nc_ohc=ne8u-vaKSiUAX-zSbOD&_nc_ht=scontent.fgdl9-1.fna&oh=00_AfDV0TJeEywoRU9GL_doG-YoAA-woZ7LZaJECa9CyAZsww&oe=638B44E0'
-      },
-      {
-        controlNumber: '02400391',
-        name: 'Israel Arjona Vizcaino',
-        curp: 'ARVI84017HTNLRNZS09',
-        age: 28,
-        nip: 1811,        
-        email: 'iarjonavi@ittepic.edu.mx',
-        career:' ISC'
-      }
-    ];
+  constructor(private firestore:AngularFirestore) { 
+
   }
 
-  public getStudents():Student[]{
-    return this.students;
+  public getStudents():Observable<Student[]>{
+    // return this.students;
+    return this.firestore.collection('students').snapshotChanges().pipe(
+      map(actions=>{
+        return actions.map(a=>{
+            const data = a.payload.doc.data() as Student;
+            const id = a.payload.doc.id;
+            return {id,...data};
+        });
+      })
+    );
   }
 
-  public getStudentByControlNumber(cn:string):Student{
-    let item: Student;
-    item =  this.students.find((student) => {
-      return student.controlNumber === cn
+  public removeStudent(id: string){
+    // this.students.splice(pos, 1);
+    // return this.students;
+    this.firestore.collection('students').doc(id).delete();
+  }
+
+  public getStudentByControlNumber(controlnumber: string): Student {
+    let item: Student = this.students.find((student)=> {
+      return student.controlnumber===controlnumber;
     });
-    
     return item;
   }
 
-  public removeStudent(pos:number){
-    return this.students.splice(pos,1);
-  }  
-
-  public newStudent(student:Student):void{
-    this.students.push(student);
+  public newStudent(student: Student) {
+    // this.students.push(student);
+    // return this.students;
+    this.firestore.collection('students').add(student)
   }
 
-  public editStudent(student:Student):void{
-    this.students.map(std =>{
-      if(std.controlNumber===student.controlNumber){
-        console.log("igual");        
-       return Object.assign(std,student)
-      }
-      return std;
-    });    
+  public getStudentById(id:string){
+    let student: Student;
+    let result = this.firestore.collection('students').doc(id).valueChanges();
+    return result;
   }
+
+  public updateStudentById(id:string,data){
+    this.firestore.collection('students').doc(id).update(data)
+  }
+
 }

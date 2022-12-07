@@ -32,17 +32,24 @@ export class ViewEditStudentPage implements OnInit {
     private fb: FormBuilder,
     private toast:ToastController,
     private aroute:ActivatedRoute,
-    private router:Router) { }
+    private router:Router) { 
+      this.student = {
+        name: '',
+        controlnumber: '',
+        email: '',
+        age: 0,
+        photo: '',
+        curp: '',
+        career: '',
+        nip: 0
+      }
+    }
 
   ngOnInit() {
     this.aroute.queryParams.subscribe((params)=>{
-      console.log(params);
-      
-      this.student = this.studentService.getStudentByControlNumber(params.controlNumber)
-      if(this.student.photo == null){
-        this.student.photo = 'https://i.stack.imgur.com/l60Hf.png';
-      }
-    });
+      this.student = params as Student;
+      console.log(51,this.student); 
+    })
     this.myForm = this.fb.group(
       {    
         name: [this.student.name, Validators.required],
@@ -83,16 +90,12 @@ export class ViewEditStudentPage implements OnInit {
     }    
   }
 
-  public saveStudent(data): void {
-    // Construir el objeto 
-    Object.assign(this.student,data);
-    this.studentService.editStudent(this.student);
-    this.presentToast('bottom','Estudiante agregado');
-    this.router.navigate(['/view-student'],
-    {
-      queryParams:{controlNumber:this.student.controlNumber}
-    }
-    );
+  public saveStudent(): void {
+    let data:Student = this.myForm.value
+    this.student = {id:this.student.id,controlnumber:this.student.controlnumber,...data}
+    console.log(this.student);
+    this.studentService.updateStudentById(this.student.id,this.student)
+    this.router.navigate(['/view-student'],{queryParams:{id:this.student.id}});
   }
 
   public async presentToast(position: 'top' | 'middle' | 'bottom', message:string) {
