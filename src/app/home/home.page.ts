@@ -3,6 +3,8 @@ import { Student } from "../models/student";
 import { AlertController, ToastController } from '@ionic/angular';
 import { StudentService } from "../services/student.service";
 import { NavigationExtras, Router } from '@angular/router';
+import { User } from 'firebase/auth';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -12,14 +14,17 @@ import { NavigationExtras, Router } from '@angular/router';
 export class HomePage {
 
   public students: Student[];
+  public user:User;
 
   constructor(private studentService:StudentService,
     private toastController: ToastController,
     private alertController: AlertController,
+    private authService:AuthService, 
     private router:Router) {
       this.studentService.getStudents().subscribe(res=>{
         this.students = res;
-      })
+      });
+      this.user = authService.getCurrentUser();
   }
 
   public async removeStudent(id:string) {
