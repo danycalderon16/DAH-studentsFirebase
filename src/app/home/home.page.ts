@@ -58,15 +58,7 @@ export class HomePage {
       message,
       duration: 1500,
       position,
-      cssClass: 'custom-toast',
-      buttons: [
-        {
-          text: 'Deshacer',
-          handler: () => {               
-            callback();
-          }
-        }
-      ]
+      cssClass: 'custom-toast',     
     });
 
     await toast.present();
@@ -90,6 +82,34 @@ export class HomePage {
 
   public goToNewStudent():void{
     this.router.navigate(['/new-student']);
+  }
+
+  public async logOut() {
+    const alert = await this.alertController.create({
+      header:'Atención',
+      message: '¿Está seguro de salir de la sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+
+          },
+        },
+        {
+          text: 'Sí',
+          role: 'confirm',
+          handler: () => {
+            this.authService.logOut().then(res => {
+              console.log(res);
+              this.router.navigate(['..']);
+            });
+            this.presentToast('bottom',`Adios ${this.user.displayName}`, 300);
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
   
 }

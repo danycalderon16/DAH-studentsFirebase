@@ -33,4 +33,15 @@ export class AuthService {
   public getCurrentUser():User{
     return this.user;
   }
+
+  public logOut(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.afAuth.signOut()
+        .then(result => {
+          resolve(result);
+        }).catch(err => {
+          reject(err);
+        });
+    });
+  }
 }
