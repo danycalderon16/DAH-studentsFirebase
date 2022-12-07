@@ -4,6 +4,7 @@ import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     private toast: ToastController,
     private router: Router,
+    private fAuth:AngularFireAuth,
     private auth:AuthService) { }
 
   ngOnInit() {
@@ -79,10 +81,6 @@ export class LoginPage implements OnInit {
     }else{
       this.presentToast('bottom','Número de control o NIP incorrecto');
     }
-  }
-
-  public onLogin(){
-    this.auth.googleAuth();
   }
 
   public async presentToast(position: 'top' | 'middle' | 'bottom', message:string) {

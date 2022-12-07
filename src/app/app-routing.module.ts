@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'auth',
     pathMatch: 'full'
   },
   {
@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'view-edit-student',
     loadChildren: () => import('./view-edit-student/view-edit-student.module').then( m => m.ViewEditStudentPageModule)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
   },
 ];
 

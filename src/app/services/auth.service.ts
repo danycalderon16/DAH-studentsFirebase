@@ -1,28 +1,36 @@
 import { Injectable } from '@angular/core';
-import { GoogleAuthProvider } from 'firebase/auth';
+import { GoogleAuthProvider, User } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthUser } from '../models/authUser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private user:User;
+
   constructor(
     public afAuth: AngularFireAuth // Inject Firebase auth service
   ) { }
-  public googleAuth() {
-    return this.authLogin(new GoogleAuthProvider());
-  }
+  // public async googleAuth():Promise<any> {
+  //   return this.authLogin(new GoogleAuthProvider());
+  // }
   
-  public authLogin(provider) {
-    return this.afAuth
-      .signInWithPopup(provider)
+  public authLogin() {
+    return new Promise((resolve, reject)=>{
+      this.afAuth.signInWithPopup(new GoogleAuthProvider())
       .then((result) => {
-        console.log(result);        
-        console.log('You have been successfully logged in!');
+        this.user = result.user;
+        resolve(this.user);
       })
       .catch((error) => {
-        console.log(error);
+        reject(error);
       });
+    });
+  }
+
+  public getCurrentUser():User{
+    return this.user;
   }
 }
