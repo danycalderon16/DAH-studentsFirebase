@@ -31,12 +31,12 @@
         <ion-col>
           <ion-item>
             <ion-label position="floating">Número de control</ion-label>
-            <ion-input type="text" placeholder="18401090" formControlName="controlNumber"></ion-input>
+            <ion-input type="text" placeholder="18401090" formControlName="controlnumber"></ion-input>
           </ion-item>
           <div>
             <ng-container *ngFor="let item of validationMessages['controlnumber']">
-              <div class="errormessage" *ngIf="(myForm.get('controlNumber').dirty || 
-              myForm.get('controlNumber').touched) && myForm.get('controlNumber').hasError(item.type) ">
+              <div class="errormessage" *ngIf="(myForm.get('controlnumber').dirty || 
+              myForm.get('controlnumber').touched) && myForm.get('controlnumber').hasError(item.type) ">
               {{item.message}}
               </div>
             </ng-container>

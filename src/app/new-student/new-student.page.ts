@@ -35,7 +35,7 @@ export class NewStudentPage implements OnInit {
   ngOnInit() {
     this.myForm = this.fb.group(
       {
-        controlNumber: ["", Validators.compose([Validators.required,
+        controlnumber: ["", Validators.compose([Validators.required,
         Validators.minLength(8),
         Validators.maxLength(8),
         Validators.pattern('^[0-9]+$')])],
@@ -45,7 +45,7 @@ export class NewStudentPage implements OnInit {
         nip: ["", Validators.compose([Validators.required, Validators.min(10), Validators.max(9999)])],
         email: ["", Validators.compose([Validators.required, Validators.pattern(this.emailRegEx)])],
         career: ["", Validators.compose([Validators.required])],
-        photo: ["", Validators.compose([Validators.required, Validators.pattern(this.urlRegEx)])],
+        photo: ["", Validators.compose([Validators.required])],
       }
     );
     
