@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { User } from 'firebase/auth';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,8 @@ export class LoginPage implements OnInit {
   public myForm: FormGroup;
   public validationMessages: Object;
 
+  public user:User;
+
   private ADMIN = 10004
   private STUDENT = 10005
 
@@ -25,7 +28,10 @@ export class LoginPage implements OnInit {
     private toast: ToastController,
     private router: Router,
     private fAuth:AngularFireAuth,
-    private auth:AuthService) { }
+    private auth:AuthService) { 
+      this.user = auth.getCurrentUser()
+      // this.user.photoURL
+    }
 
   ngOnInit() {
     this.myForm = this.fb.group(

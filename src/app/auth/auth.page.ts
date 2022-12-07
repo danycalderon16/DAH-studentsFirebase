@@ -18,7 +18,7 @@ export class AuthPage implements OnInit {
   public onLogin(){
     this.auth.authLogin().then(res=>{
       let user = this.auth.getCurrentUser();
-      this.router.navigate('login',)
+      this.router.navigate(['login'])
       
     }).catch(err=>{
       console.log(err);
