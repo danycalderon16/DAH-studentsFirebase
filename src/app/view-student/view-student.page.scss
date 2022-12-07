@@ -13,31 +13,19 @@ ion-toolbar {
     --background: transparent;
 }
 
-.card {
-    margin: 0 auto;
 
-    .header {
-        height: 200px; // 20vh;
 
-        .avatar {
-            width: 160px; //40vw
-            height: 160px;
-            position: relative;
-            margin: 0 auto;
-
-            img {
-                display: block;
-                border-radius: 50%;
-                position: absolute;
-                bottom: calc(-1*(80px + 4px)); // -42px;
-                background-color: #fff;
-            }
-        }
-    }
+img {
+    display: block;
+    border-radius: 20px;
+    background-color: #fff;
+    max-width: 200px;
 }
 
-ion-label{
-display: block;
+
+
+ion-label {
+    display: block;
 }
 
 .card-body {
